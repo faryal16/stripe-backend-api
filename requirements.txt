@@ -1,5 +1,6 @@
 fastapi
 stripe
-python-dotenv
 mangum
-uvicorn  # optional if you want to run locally
+uvicorn             # only if you test locally; not required on Vercel
+python-dotenv       # optional, if you ever load .env locally
+typing-extensions   # if you need extra typing support
