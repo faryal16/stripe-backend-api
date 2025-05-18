@@ -65,3 +65,6 @@ async def stripe_webhook(request: Request):
         print("✅ Payment successful:", session)
 
     return {"status": "success"}
+
+
+app = app
