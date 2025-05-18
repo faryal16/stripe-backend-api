@@ -1,9 +1,9 @@
-
 import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 from dotenv import load_dotenv
+from mangum import Mangum
 
 load_dotenv()
 
@@ -18,13 +18,12 @@ app.add_middleware(
 )
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
-# FRONTEND_URL = os.getenv("https://class08-raah-e-hunar-app.streamlit.app", "FRONTEND_DOMAIN")
 
 @app.post("/create-checkout-session/")
 async def create_checkout_session(request: Request):
     data = await request.json()
-    success_url = f"https://class08-raah-e-hunar-app.streamlit.app/?payment=success"
-    cancel_url = f"https://class08-raah-e-hunar-app.streamlit.app/?payment=cancel"
+    success_url = "https://class08-raah-e-hunar-app.streamlit.app/?payment=success"
+    cancel_url = "https://class08-raah-e-hunar-app.streamlit.app/?payment=cancel"
 
     try:
         session = stripe.checkout.Session.create(
@@ -32,9 +31,7 @@ async def create_checkout_session(request: Request):
             line_items=[{
                 "price_data": {
                     "currency": "pkr",
-                    "product_data": {
-                        "name": data["title"],
-                    },
+                    "product_data": {"name": data["title"]},
                     "unit_amount": int(data["price"]) * 100,
                 },
                 "quantity": 1,
@@ -47,7 +44,6 @@ async def create_checkout_session(request: Request):
         return {"checkout_url": session.url}
     except Exception as e:
         return {"error": str(e)}
-
 
 @app.post("/webhook/")
 async def stripe_webhook(request: Request):
@@ -66,5 +62,4 @@ async def stripe_webhook(request: Request):
 
     return {"status": "success"}
 
-
-app = app
+handler = Mangum(app)  # This wraps the FastAPI app for AWS Lambda (Vercel)

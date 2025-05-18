@@ -1,4 +1,5 @@
 fastapi
 stripe
 python-dotenv
-uvicorn
+mangum
+uvicorn  # optional if you want to run locally
