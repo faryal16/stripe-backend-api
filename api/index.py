@@ -21,6 +21,10 @@ stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 if not stripe.api_key:
     raise RuntimeError("STRIPE_SECRET_KEY not set in environment variables!")
 
+@app.get("/")
+async def health():
+    return {"status": "ok"}
+
 @app.post("/create-checkout-session/")
 async def create_checkout_session(request: Request):
     data = await request.json()
