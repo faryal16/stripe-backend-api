@@ -7,7 +7,7 @@ from mangum import Mangum
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 
 app.add_middleware(
     CORSMiddleware,
