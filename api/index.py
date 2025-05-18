@@ -2,10 +2,10 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from mangum import Mangum
 
-load_dotenv()
+# load_dotenv()
 
 app = FastAPI(root_path="/api")
 
@@ -18,6 +18,8 @@ app.add_middleware(
 )
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+if not stripe.api_key:
+    raise RuntimeError("STRIPE_SECRET_KEY not set in environment variables!")
 
 @app.post("/create-checkout-session/")
 async def create_checkout_session(request: Request):
