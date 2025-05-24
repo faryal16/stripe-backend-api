@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request ,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 from dotenv import load_dotenv
-from mangum import Mangum
+# from mangum import Mangum
 import logging
 
 load_dotenv()
@@ -33,7 +33,7 @@ logger.info("Starting app...")
 
 @app.get("/")
 async def root():
-    return {"message": "Hello Vercel"}
+    return {"message": "Hello Render!"}
 
 class CheckoutSessionRequest(BaseModel):
     title: str
@@ -85,4 +85,4 @@ async def stripe_webhook(request: Request):
 
     return {"status": "success"}
 
-handler = Mangum(app)  # This wraps the FastAPI app for AWS Lambda (Vercel)
+# handler = Mangum(app)  # This wraps the FastAPI app for AWS Lambda (Vercel)
