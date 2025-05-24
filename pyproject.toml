@@ -1,11 +1,13 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi[standard]>=0.115.12",
-    "mangum",
-    "stripe==8.6.0",
+  "fastapi[standard]==0.95.2",
+  "pydantic==1.9.1",
+  "stripe==8.6.0",
+  "uvicorn[standard]==0.23.2",
+  "python-dotenv==1.0.0",
+  "typing-extensions==4.7.1",
+  "mangum==0.17.0"
 ]

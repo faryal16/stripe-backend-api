@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request ,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 from dotenv import load_dotenv
@@ -68,7 +68,7 @@ async def stripe_webhook(request: Request):
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
     except Exception as e:
-        return {"error": str(e)}
+         raise HTTPException(status_code=400, detail=f"Webhook error: {str(e)}")
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
