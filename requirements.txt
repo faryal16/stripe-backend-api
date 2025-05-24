@@ -1,6 +1,7 @@
-fastapi
-stripe
-mangum
-uvicorn             # only if you test locally; not required on Vercel
-python-dotenv       # optional, if you ever load .env locally
-typing-extensions   # if you need extra typing support
+fastapi==0.103.0
+stripe==8.6.0
+uvicorn[standard]==0.23.2
+python-dotenv==1.0.0
+pydantic==1.10.13
+typing-extensions==4.7.1
+mangum==0.17.0  # Uncomment if using with AWS Lambda

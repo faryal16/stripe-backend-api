@@ -2,16 +2,16 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from mangum import Mangum
 
-# load_dotenv()
+load_dotenv()
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://class08-raah-e-hunar-app.streamlit.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -23,7 +23,7 @@ if not stripe.api_key:
 
 @app.get("/")
 async def health():
-    return {"status": "ok"}
+    return {"hello": "world"}
 
 @app.post("/create-checkout-session/")
 async def create_checkout_session(request: Request):
