@@ -1,4 +1,5 @@
 import os
+from pydantic import BaseModel, EmailStr
 from fastapi import FastAPI, Request ,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
@@ -9,6 +10,7 @@ import logging
 load_dotenv()
 
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,9 +35,16 @@ logger.info("Starting app...")
 async def root():
     return {"message": "Hello Vercel"}
 
+class CheckoutSessionRequest(BaseModel):
+    title: str
+    price: int
+    email: str
 @app.post("/create-checkout-session/")
 async def create_checkout_session(request: Request):
     data = await request.json()
+    
+    
+    print("🚨 DEBUG - Raw request data:", data)
     success_url = "https://class08-raah-e-hunar-app.streamlit.app/?payment=success"
     cancel_url = "https://class08-raah-e-hunar-app.streamlit.app/?payment=cancel"
 
