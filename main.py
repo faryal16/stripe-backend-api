@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import stripe
 from dotenv import load_dotenv
 from mangum import Mangum
+import logging
 
 load_dotenv()
 
@@ -21,9 +22,16 @@ stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 if not stripe.api_key:
     raise RuntimeError("STRIPE_SECRET_KEY not set in environment variables!")
 
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+logger.info("Starting app...")
+
+
 @app.get("/")
-async def health():
-    return {"hello": "world"}
+async def root():
+    return {"message": "Hello Vercel"}
 
 @app.post("/create-checkout-session/")
 async def create_checkout_session(request: Request):

@@ -1,7 +1,7 @@
-fastapi==0.103.0
+fastapi==0.95.2
+pydantic==1.10.13
 stripe==8.6.0
 uvicorn[standard]==0.23.2
 python-dotenv==1.0.0
-pydantic==1.10.13
 typing-extensions==4.7.1
-mangum==0.17.0  # Uncomment if using with AWS Lambda
+mangum==0.17.0
